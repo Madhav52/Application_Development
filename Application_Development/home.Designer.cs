@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.rBtnPending = new System.Windows.Forms.RadioButton();
@@ -66,13 +68,19 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.dateReport = new System.Windows.Forms.DateTimePicker();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridReport = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelReport = new System.Windows.Forms.Panel();
+            this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridStudent)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridReport)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.panelReport.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -80,9 +88,9 @@
             this.pictureBox1.BackColor = System.Drawing.Color.Gold;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(-1, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(-1, 27);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1019, 514);
+            this.pictureBox1.Size = new System.Drawing.Size(1019, 487);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -98,10 +106,12 @@
             this.btnClear.TabIndex = 70;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // rBtnPending
             // 
             this.rBtnPending.AutoSize = true;
+            this.rBtnPending.Checked = true;
             this.rBtnPending.Font = new System.Drawing.Font("Open Sans Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rBtnPending.ForeColor = System.Drawing.Color.DarkBlue;
             this.rBtnPending.Location = new System.Drawing.Point(8, 7);
@@ -121,7 +131,6 @@
             this.rBtnPublished.Name = "rBtnPublished";
             this.rBtnPublished.Size = new System.Drawing.Size(87, 22);
             this.rBtnPublished.TabIndex = 37;
-            this.rBtnPublished.TabStop = true;
             this.rBtnPublished.Text = "Published";
             this.rBtnPublished.UseVisualStyleBackColor = true;
             // 
@@ -182,6 +191,7 @@
             // gender
             // 
             this.gender.BackColor = System.Drawing.Color.Azure;
+            this.gender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.gender.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gender.ForeColor = System.Drawing.SystemColors.WindowText;
             this.gender.FormattingEnabled = true;
@@ -194,7 +204,6 @@
             this.gender.Name = "gender";
             this.gender.Size = new System.Drawing.Size(134, 26);
             this.gender.TabIndex = 65;
-            this.gender.Text = "Select";
             // 
             // txtContactNo
             // 
@@ -224,7 +233,7 @@
             // txtId
             // 
             this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtId.Location = new System.Drawing.Point(200, 19);
+            this.txtId.Location = new System.Drawing.Point(200, 25);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(51, 22);
             this.txtId.TabIndex = 62;
@@ -446,14 +455,14 @@
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.Gold;
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label11.Font = new System.Drawing.Font("Open Sans Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Font = new System.Drawing.Font("Open Sans Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.DarkBlue;
-            this.label11.Location = new System.Drawing.Point(297, 35);
+            this.label11.Location = new System.Drawing.Point(296, 39);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(96, 30);
+            this.label11.Size = new System.Drawing.Size(115, 28);
             this.label11.TabIndex = 73;
-            this.label11.Text = "Sort List";
+            this.label11.Text = "Sort List By";
             // 
             // cbSorting
             // 
@@ -462,9 +471,9 @@
             this.cbSorting.Items.AddRange(new object[] {
             "First Name",
             "Registration Date"});
-            this.cbSorting.Location = new System.Drawing.Point(400, 37);
+            this.cbSorting.Location = new System.Drawing.Point(416, 39);
             this.cbSorting.Name = "cbSorting";
-            this.cbSorting.Size = new System.Drawing.Size(140, 28);
+            this.cbSorting.Size = new System.Drawing.Size(124, 28);
             this.cbSorting.TabIndex = 74;
             this.cbSorting.Text = "Select";
             this.cbSorting.SelectedIndexChanged += new System.EventHandler(this.cbSorting_SelectedIndexChanged);
@@ -551,6 +560,7 @@
             this.btnExit.TabIndex = 80;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // dateReport
             // 
@@ -560,35 +570,103 @@
             this.dateReport.CalendarTitleForeColor = System.Drawing.Color.Blue;
             this.dateReport.CalendarTrailingForeColor = System.Drawing.Color.Coral;
             this.dateReport.Font = new System.Drawing.Font("Open Sans", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateReport.Location = new System.Drawing.Point(670, 37);
+            this.dateReport.Location = new System.Drawing.Point(672, 39);
             this.dateReport.Margin = new System.Windows.Forms.Padding(2);
             this.dateReport.Name = "dateReport";
             this.dateReport.Size = new System.Drawing.Size(132, 28);
             this.dateReport.TabIndex = 81;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.DarkGray;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1018, 30);
+            this.menuStrip1.TabIndex = 84;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importToolStripMenuItem,
+            this.closeToolStripMenuItem});
+            this.menuToolStripMenuItem.Font = new System.Drawing.Font("Open Sans Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(66, 26);
+            this.menuToolStripMenuItem.Text = "Menu";
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem.Text = "Import";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
             // dataGridReport
             // 
+            this.dataGridReport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridReport.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridReport.BackgroundColor = System.Drawing.Color.SeaShell;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridReport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridReport.Location = new System.Drawing.Point(26, 22);
+            this.dataGridReport.Location = new System.Drawing.Point(26, 31);
             this.dataGridReport.Name = "dataGridReport";
-            this.dataGridReport.Size = new System.Drawing.Size(375, 190);
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.NullValue = null;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridReport.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dataGridReport.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridReport.Size = new System.Drawing.Size(641, 304);
             this.dataGridReport.TabIndex = 82;
             // 
-            // panel1
+            // panelReport
             // 
-            this.panel1.Controls.Add(this.dataGridReport);
-            this.panel1.Location = new System.Drawing.Point(431, 143);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(424, 238);
-            this.panel1.TabIndex = 83;
+            this.panelReport.Controls.Add(this.btnClose);
+            this.panelReport.Controls.Add(this.dataGridReport);
+            this.panelReport.Location = new System.Drawing.Point(296, 78);
+            this.panelReport.Name = "panelReport";
+            this.panelReport.Size = new System.Drawing.Size(695, 362);
+            this.panelReport.TabIndex = 83;
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Red;
+            this.btnClose.Location = new System.Drawing.Point(633, 5);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(34, 25);
+            this.btnClose.TabIndex = 85;
+            this.btnClose.Text = "X";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.button1_Click);
             // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1018, 514);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelReport);
             this.Controls.Add(this.dateReport);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnUpdate);
@@ -624,6 +702,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "Home";
             this.Text = "home";
             this.Load += new System.EventHandler(this.Home_Load);
@@ -631,8 +710,10 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridStudent)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridReport)).EndInit();
-            this.panel1.ResumeLayout(false);
+            this.panelReport.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -677,7 +758,12 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.DateTimePicker dateReport;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataGridReport;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelReport;
+        private System.Windows.Forms.Button btnClose;
     }
 }

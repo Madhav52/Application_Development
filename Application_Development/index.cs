@@ -29,5 +29,22 @@ namespace Application_Development
             home.ShowDialog();
             this.Close();
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog = new DialogResult();
+
+            dialog = MessageBox.Show("Do you want to close?", "Alert!", MessageBoxButtons.YesNo);
+
+            if (dialog == DialogResult.Yes)
+            {
+                System.Environment.Exit(1);
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

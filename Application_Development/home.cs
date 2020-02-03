@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,7 +18,9 @@ namespace Application_Development
             InitializeComponent();
             BindGrid();
             btnUpdate.Visible = false;
-            dataGridReport.Hide();
+            dataGridReport.Visible= false;
+            panelReport.Visible = false;
+            
         }
 
         private void cbSorting_SelectedIndexChanged(object sender, EventArgs e)
@@ -67,29 +70,38 @@ namespace Application_Development
             }
             else
             {
-                Student obj = new Student();
-                obj.Name = txtFirstName.Text + " " + txtLastName.Text;
-                obj.Address = txtAddress.Text;
-                obj.Email = txtEmail.Text;
-                obj.BirthDate = dob.Value;
-                obj.ContactNo = txtContactNo.Text;
-                obj.Gender = gender.SelectedItem.ToString();
-                obj.RegistrationDate = regDate.Value;
-                obj.Course = enrolProgram.SelectedItem.ToString();
-                if (rBtnPending.Checked == true)
+                if (Regex.IsMatch(txtContactNo.Text,"^[0-9]{10}"))
                 {
-                    obj.Status = rBtnPending.Text;
-                }
+                    Student obj = new Student();
+                    obj.FirstName = txtFirstName.Text;
+                    obj.LastName = txtLastName.Text;
+                    obj.Name = txtFirstName.Text + " " + txtLastName.Text;
+                    obj.Address = txtAddress.Text;
+                    obj.Email = txtEmail.Text;
+                    obj.BirthDate = dob.Value;
+                    obj.ContactNo = txtContactNo.Text;
+                    obj.Gender = gender.SelectedItem.ToString();
+                    obj.RegistrationDate = regDate.Value;
+                    obj.Course = enrolProgram.SelectedItem.ToString();
+                    if (rBtnPending.Checked == true)
+                    {
+                        obj.Status = rBtnPending.Text;
+                    }
 
-                else if (rBtnPublished.Checked == true)
+                    else if (rBtnPublished.Checked == true)
+                    {
+                        obj.Status = rBtnPublished.Text;
+                    }
+
+                    obj.Add(obj);
+                    MessageBox.Show("Data is Sucessfully saved", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BindGrid();
+                    Clear();
+                }
+                else
                 {
-                    obj.Status = rBtnPublished.Text;
+                    MessageBox.Show("Invalid Number Occurred! Please enter valid phone number", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                obj.Add(obj);
-                MessageBox.Show("Data is Sucessfully saved", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                BindGrid();
-                Clear();
 
             }
         }
@@ -120,13 +132,14 @@ namespace Application_Development
             {
                 rBtnPublished.Checked = false;
             }
+            
         }
 
         private void btnSort_Click(object sender, EventArgs e)
         {
             if (cbSorting.SelectedItem != null)
             {
-                if (cbSorting.SelectedItem.ToString() == "Name")
+                if (cbSorting.SelectedItem.ToString() == "First Name")
                 {
                     Student obj = new Student();
 
@@ -134,7 +147,7 @@ namespace Application_Development
                     List<Student> listStudents = obj.List();
 
                     //list after sorting
-                    List<Student> lst = obj.Sort(listStudents, "Name");
+                    List<Student> lst = obj.Sort(listStudents, "First Name");
 
                     //adding sorted list to datatable
                     DataTable dt = Utility.ConvertToDataTable(lst);
@@ -165,31 +178,39 @@ namespace Application_Development
         {
             Student obj = new Student();
             obj.Id = int.Parse(txtId.Text);
-            string firstName = txtFirstName.Text;
-            string lastName = txtLastName.Text;
+            obj.FirstName = txtFirstName.Text;
+            obj.LastName = txtLastName.Text;
             obj.Name = txtFirstName.Text + " " + txtLastName.Text;
             obj.Address = txtAddress.Text;
             obj.Email = txtEmail.Text;
             obj.BirthDate = dob.Value;
-            obj.ContactNo = txtContactNo.Text;
-            obj.Gender = gender.SelectedItem.ToString();
-            obj.RegistrationDate = regDate.Value;
-            obj.Course = enrolProgram.SelectedItem.ToString();
-            if (rBtnPending.Checked == true)
+            if (Regex.IsMatch(txtContactNo.Text, "^[0-9]{10}"))
             {
-                obj.Status = rBtnPending.Text;
-            }
+                obj.ContactNo = txtContactNo.Text;
+                obj.Gender = gender.SelectedItem.ToString();
+                obj.RegistrationDate = regDate.Value;
+                obj.Course = enrolProgram.SelectedItem.ToString();
+                if (rBtnPending.Checked == true)
+                {
+                    obj.Status = rBtnPending.Text;
+                }
 
-            else if (rBtnPublished.Checked == true)
-            {
-                obj.Status = rBtnPublished.Text;
+                else if (rBtnPublished.Checked == true)
+                {
+                    obj.Status = rBtnPublished.Text;
+                }
+                obj.Edit(obj);
+                BindGrid();
+                Clear();
+                btnUpdate.Visible = false;
+                btnSave.Visible = true;
+                MessageBox.Show("Data is Sucessfully Updated", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            obj.Edit(obj);
-            BindGrid();
-            Clear();
-            btnUpdate.Visible = false;
-            btnSave.Visible = true;
-            MessageBox.Show("Data is Sucessfully Updated", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                MessageBox.Show("Invalid Number Occurred! Please enter valid phone number", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -235,15 +256,9 @@ namespace Application_Development
                 gender.SelectedItem = s.Gender;
                 enrolProgram.SelectedItem = s.Course;
                 regDate.Value = s.RegistrationDate;
-                if (rBtnPending.Checked == true)
-                {
-                    obj.Status = rBtnPending.Text;
-                }
-
-                else if (rBtnPublished.Checked == true)
-                {
-                    obj.Status = rBtnPublished.Text;
-                }
+     
+                
+                
             }
             btnUpdate.Visible = true;
             btnSave.Visible = false;
@@ -257,6 +272,7 @@ namespace Application_Development
 
         private void btnReport_Click(object sender, EventArgs e)
         {
+
             //new object of Student
             Student obj = new Student();
 
@@ -282,17 +298,58 @@ namespace Application_Development
                         Count = cl.Count().ToString()
                     }).ToList();
 
-            dataGridReport.Show();
+            dataGridReport.Visible = true;
+            panelReport.Visible = true;
             dataGridStudent.Hide();
 
-            dataGridReport.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            dataGridReport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             //convert the result to datatable and show in a datagrid view
             DataTable dt = Utility.ConvertToDataTable(result);
             dataGridReport.DataSource = dt;
-            dataGridReport.AutoResizeColumns();
             dataGridReport.CurrentCell = null;
+        }
 
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Import importFile = new Import();
+            importFile.ShowDialog();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog = new DialogResult();
+
+            dialog = MessageBox.Show("Do you want to close?", "Alert!", MessageBoxButtons.YesNo);
+
+            if (dialog == DialogResult.Yes)
+            {
+                System.Environment.Exit(1);
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog = new DialogResult();
+
+            dialog = MessageBox.Show("Do you want to close?", "Alert!", MessageBoxButtons.YesNo);
+
+            if (dialog == DialogResult.Yes)
+            {
+                System.Environment.Exit(1);
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataGridReport.Visible = false;
+            panelReport.Visible = false;
+            dataGridStudent.Show();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            Clear();
+            MessageBox.Show("Data is cleared sucessfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

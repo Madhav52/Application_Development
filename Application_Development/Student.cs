@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Application_Development
 {
@@ -11,6 +12,8 @@ namespace Application_Development
     {
         private string _filePath = "student.json";
         public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string ContactNo { get; set; }
@@ -29,10 +32,7 @@ namespace Application_Development
             string data = JsonConvert.SerializeObject(form, Formatting.None);
             Utility.WriteToTextFile(_filePath, data);
         }
-        public void Update()
-        {
-
-        }
+        
         public void Edit(Student info)
         {
             //invoking list method of the student class to get student list
@@ -78,14 +78,14 @@ namespace Application_Development
 
         public List<Student> Sort(List<Student> listStudents, string sortType)
         {
-            if (sortType == "Name")
+            if (sortType == "First Name")
             {
                 string[] list = new string[listStudents.Count];
 
                 //Adding names of the student to the list
                 for (var i = 0; i < listStudents.Count; i++)
                 {
-                    list[i] = listStudents[i].Name;
+                    list[i] = listStudents[i].FirstName;
                 }
 
                 //implementing bubble sort algorithm
@@ -174,13 +174,20 @@ namespace Application_Development
             List<Student> weeklyStudents = new List<Student>();
 
             //iterating each list of student
-            for (int j = 0; j < listStudents.Count(); j++)
+            for (int i = 0; i < listStudents.Count(); i++)
             {
                 //checking whether the registration date is in between week start and end date
-                if (listStudents[j].RegistrationDate > dayArray[0] && listStudents[j].RegistrationDate < dayArray[1])
+                if (listStudents[i].RegistrationDate > dayArray[0] && listStudents[i].RegistrationDate < dayArray[1])
                 {
                     // if the student has enroled in that week then add student to the new list
-                    weeklyStudents.Add(listStudents[j]);
+                    weeklyStudents.Add(listStudents[i]);
+                }
+                else
+                {
+                    MessageBox.Show("No any student were registered in this week. Please select other date", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    break;
+                    
+                    
                 }
             }
             //return the new list of students

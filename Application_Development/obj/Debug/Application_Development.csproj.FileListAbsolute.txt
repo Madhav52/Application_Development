@@ -13,3 +13,5 @@ C:\Users\BIPIN\source\repos\Application_Development\Application_Development\obj\
 C:\Users\BIPIN\source\repos\Application_Development\Application_Development\obj\Debug\Application_Development.index.resources
 C:\Users\BIPIN\source\repos\Application_Development\Application_Development\obj\Debug\Application_Development.csproj.CopyComplete
 C:\Users\BIPIN\source\repos\Application_Development\Application_Development\obj\Debug\Application_Development.Chart.resources
+C:\Users\BIPIN\source\repos\Application_Development\Application_Development\obj\Debug\Application_Development.Import.resources
+C:\Users\BIPIN\source\repos\Application_Development\Application_Development\obj\Debug\Application_Development.Enroll.resources
