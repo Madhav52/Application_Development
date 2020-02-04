@@ -193,6 +193,7 @@ namespace Application_Development
                 if (rBtnPending.Checked == true)
                 {
                     obj.Status = rBtnPending.Text;
+                    
                 }
 
                 else if (rBtnPublished.Checked == true)
@@ -256,9 +257,23 @@ namespace Application_Development
                 gender.SelectedItem = s.Gender;
                 enrolProgram.SelectedItem = s.Course;
                 regDate.Value = s.RegistrationDate;
-     
-                
-                
+
+                if (dataGridStudent.CurrentRow.Cells["Status"].FormattedValue.Equals("Pending"))
+                {
+                    rBtnPending.Checked = true;
+                }
+                else
+                {
+                    rBtnPublished.Checked = false;
+                }
+                if (dataGridStudent.CurrentRow.Cells["Status"].FormattedValue.Equals("Published"))
+                {
+                    rBtnPublished.Checked = true;
+                }
+                else
+                {
+                    rBtnPending.Checked = false;
+                }
             }
             btnUpdate.Visible = true;
             btnSave.Visible = false;
@@ -318,7 +333,7 @@ namespace Application_Development
         {
             DialogResult dialog = new DialogResult();
 
-            dialog = MessageBox.Show("Do you want to close?", "Alert!", MessageBoxButtons.YesNo);
+            dialog = MessageBox.Show("Do you want to close?", "Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (dialog == DialogResult.Yes)
             {
@@ -330,7 +345,7 @@ namespace Application_Development
         {
             DialogResult dialog = new DialogResult();
 
-            dialog = MessageBox.Show("Do you want to close?", "Alert!", MessageBoxButtons.YesNo);
+            dialog = MessageBox.Show("Do you want to close?", "Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (dialog == DialogResult.Yes)
             {

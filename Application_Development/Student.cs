@@ -180,15 +180,17 @@ namespace Application_Development
                 if (listStudents[i].RegistrationDate > dayArray[0] && listStudents[i].RegistrationDate < dayArray[1])
                 {
                     // if the student has enroled in that week then add student to the new list
+                    
                     weeklyStudents.Add(listStudents[i]);
                 }
-                else
+                /* else
                 {
-                    MessageBox.Show("No any student were registered in this week. Please select other date", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                     MessageBox.Show("No any student were registered in this week. Please select other date", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                     
                     
-                }
+                 } */
             }
             //return the new list of students
             return weeklyStudents; 
